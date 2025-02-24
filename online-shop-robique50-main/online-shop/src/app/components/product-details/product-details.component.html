@@ -1,0 +1,43 @@
+<div *ngIf="product" class="product-details">
+  <h2>{{ product.name }}</h2>
+  <div class="product-image">
+    <img [src]="product.imageUrl" alt="{{ product.name }}" />
+  </div>
+  <p><strong>Description:</strong> {{ product.description }}</p>
+  <p>
+    <strong>Price:</strong> 
+    <span class="product-price">{{ product.price | currency }}</span>
+  </p>
+  <p><strong>Weight:</strong> {{ product.weight }} kg</p>
+  <p><strong>Category:</strong> {{ product.categoryName }}</p>
+  
+  <div class="quantity-controls">
+    <label [for]="'quantity-' + product.id">Quantity:</label>
+    <div class="quantity-actions">
+      <app-icon-button
+        icon="➖"
+        ariaLabel="Decrease quantity"
+        (onClick)="updateQuantity(-1)"
+      ></app-icon-button>
+      <span>{{ quantity }}</span>
+      <app-icon-button
+        icon="➕"
+        ariaLabel="Increase quantity"
+        (onClick)="updateQuantity(1)"
+      ></app-icon-button>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <app-icon-button
+      icon="🛒"
+      ariaLabel="Add to cart"
+      (onClick)="addToCart()"
+    ></app-icon-button>
+    <app-icon-button
+      icon="🗑️"
+      ariaLabel="Delete product"
+      (onClick)="deleteProduct()"
+    ></app-icon-button>
+  </div>
+</div>

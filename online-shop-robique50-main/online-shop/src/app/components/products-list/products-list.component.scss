@@ -1,0 +1,49 @@
+@use "../../styles/colors.scss" as *;
+@use "../../styles/mixins.scss" as *;
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.product-card {
+  width: 250px;
+  padding: 15px;
+  border: 1px solid $border-color;
+  background-color: $bg-primary;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px $shadow-light;
+
+  p {
+    color: $green;
+  }
+
+  h3 {
+    margin-bottom: 10px;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+    height: auto;
+  }
+
+  button {
+    @include icon-button;
+    background-color: $blue;
+    color: $white;
+    font-size: 20px;
+
+    &:hover {
+      background-color: $blue;
+    }
+
+    &:active {
+      background-color: $dark-blue;
+    }
+  }
+}

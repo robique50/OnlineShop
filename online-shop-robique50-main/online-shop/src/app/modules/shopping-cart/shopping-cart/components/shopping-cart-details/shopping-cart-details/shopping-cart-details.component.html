@@ -1,0 +1,66 @@
+<div class="shopping-cart">
+  <div class="cart-header">
+    <h2>Shopping Cart</h2>
+  </div>
+
+  <ng-container *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="cart-items">
+      <div *ngFor="let item of cartItems" class="cart-item">
+        <img
+          [src]="item.product.imageUrl"
+          [alt]="item.product.name"
+          class="cart-item-image"
+        />
+        <div class="cart-item-details">
+          <h3>{{ item.product.name }}</h3>
+          <p class="price">Price: {{ item.product.price | currency }}</p>
+          <div class="quantity">
+            <label [id]="'quantity-label-' + item.product.id">Quantity:</label>
+            <div class="quantity-controls">
+              <app-icon-button
+                icon="➖"
+                ariaLabel="Decrease quantity"
+                (onClick)="updateQuantity(item, item.quantity - 1)"
+              ></app-icon-button>
+              <span>{{ item.quantity }}</span>
+              <app-icon-button
+                icon="➕"
+                ariaLabel="Increase quantity"
+                (onClick)="updateQuantity(item, item.quantity + 1)"
+              ></app-icon-button>
+            </div>
+          </div>
+          <div class="total">
+            <label>Total:</label>
+            <span class="total-value">{{ item.totalPrice | currency }}</span>
+          </div>
+        </div>
+        <app-icon-button
+          class="remove-button"
+          icon="🗑️"
+          ariaLabel="Remove item"
+          (onClick)="removeFromCart(item)"
+        ></app-icon-button>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <div class="total">
+        <div class="label">Cart Total:</div>
+        <div class="amount">{{ cartTotalPrice | currency }}</div>
+      </div>
+    </div>
+    <div class="checkout-button">
+    <app-icon-button
+      icon="💳"
+      ariaLabel="Proceed to checkout"
+      (onClick)="checkout()"
+    ></app-icon-button>
+  </div>
+  </ng-container>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart">
+      <p>Your cart is empty</p>
+    </div>
+  </ng-template>
+</div>
