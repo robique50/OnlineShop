@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './modules/auth/components/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
+import { CustomerGuard } from './guards/customer.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'products',
     loadChildren: () =>
       import('./modules/routes/products/products.module').then(
         (m) => m.ProductsModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'cart',
@@ -16,8 +21,11 @@ const routes: Routes = [
       import('./modules/routes/shopping-cart/shopping-cart.module').then(
         (m) => m.ShoppingCartModule
       ),
+    canActivate: [AuthGuard,CustomerGuard],
   },
+  { path: '**', redirectTo: '/login' },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

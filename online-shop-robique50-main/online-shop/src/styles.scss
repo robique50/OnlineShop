@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@use "./app//styles/colors.scss" as c;
+
+.error-snackbar {
+  background: c.$warning;
+  color: c.$text-primary;
+  box-shadow: 0 2px 8px c.$shadow-dark;
+  animation: slideIn 0.3s forwards;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--dark-bg-primary);
+}
+
+html {
+  box-sizing: border-box;
+}
+
+app-root {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 100%;
+  overflow-x: hidden;
+}

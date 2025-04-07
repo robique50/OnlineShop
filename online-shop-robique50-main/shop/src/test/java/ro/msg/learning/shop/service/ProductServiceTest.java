@@ -100,13 +100,13 @@ class ProductServiceTest {
     }
 
     @Test
-    void testFindCategoryById() {
-        when(productCategoryRepository.findById(testCategory.getId())).thenReturn(Optional.of(testCategory));
+    void testFindCategoryByName() {
+        when(productCategoryRepository.findByName(testCategory.getName())).thenReturn(Optional.of(testCategory));
 
-        ProductCategory foundCategory = productService.findCategoryById(testCategory.getId());
+        ProductCategory foundCategory = productService.findCategoryByName(testCategory.getName());
 
         assertNotNull(foundCategory);
         assertEquals(testCategory.getName(), foundCategory.getName());
-        verify(productCategoryRepository, times(1)).findById(testCategory.getId());
+        verify(productCategoryRepository, times(1)).findByName(testCategory.getName());
     }
 }

@@ -12,3 +12,9 @@ export type OrderRequest = {
   deliveryStreetAddress: string;
   products: OrderProduct[];
 };
+
+export type DeliveryDetails = {
+  country: string;
+  city: string;
+  streetAddress: string;
+};

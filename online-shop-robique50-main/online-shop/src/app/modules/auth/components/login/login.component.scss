@@ -1,0 +1,74 @@
+@use "../../../../styles/colors" as c;
+@use "../../../../styles/mixins" as m;
+
+.login-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: c.$dark-bg-primary;
+}
+
+.login-form {
+  @include m.form-container;
+
+  h2 {
+    color: c.$text-primary;
+    font-size: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      color: c.$text-secondary;
+      margin-bottom: 8px;
+      font-size: 14px;
+
+      .required {
+        color: inherit;
+      }
+    }
+
+    input {
+      @include m.input-field;
+
+      &.error {
+        border-color: c.$danger;
+      }
+    }
+
+    .error-message {
+      color: c.$danger;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+
+  .login-button {
+    width: 100%;
+    padding: 12px;
+    background: c.$blue-primary;
+    color: c.$text-primary;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: c.$blue-primary;
+      transform: translateY(-1px);
+    }
+  }
+}

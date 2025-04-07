@@ -44,7 +44,7 @@ public class ProductController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        ProductCategory category = productService.findCategoryById(productDTO.getCategoryId());
+        ProductCategory category = productService.findCategoryByName(productDTO.getCategoryName());
         Product product = ProductMapper.toEntity(productDTO, category);
         Product savedProduct = productService.save(product);
         return ResponseEntity.ok(ProductMapper.toDTO(savedProduct));
@@ -53,7 +53,7 @@ public class ProductController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable UUID id, @RequestBody ProductDTO productDTO) {
-        ProductCategory category = productService.findCategoryById(productDTO.getCategoryId());
+        ProductCategory category = productService.findCategoryByName(productDTO.getCategoryName());
         Product product = ProductMapper.toEntity(productDTO, category);
         product.setId(id);
         Product updatedProduct = productService.save(product);

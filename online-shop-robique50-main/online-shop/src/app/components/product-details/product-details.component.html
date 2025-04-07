@@ -1,3 +1,7 @@
+<div class="loading-container" *ngIf="!product">
+  Loading product details...
+</div>
+
 <div *ngIf="product" class="product-details">
   <h2>{{ product.name }}</h2>
   <div class="product-image">
@@ -12,15 +16,14 @@
   <p><strong>Category:</strong> {{ product.categoryName }}</p>
   
   <div class="quantity-controls">
-    <label [for]="'quantity-' + product.id">Quantity:</label>
     <div class="quantity-actions">
-      <app-icon-button
+      <app-icon-button *ngIf="isCustomer"
         icon="➖"
         ariaLabel="Decrease quantity"
         (onClick)="updateQuantity(-1)"
       ></app-icon-button>
-      <span>{{ quantity }}</span>
-      <app-icon-button
+      <span *ngIf="isCustomer">{{ quantity }}</span>
+      <app-icon-button *ngIf="isCustomer"
         icon="➕"
         ariaLabel="Increase quantity"
         (onClick)="updateQuantity(1)"
@@ -29,15 +32,21 @@
   </div>
 
   <div class="action-buttons">
-    <app-icon-button
+    <app-icon-button *ngIf="isCustomer"
       icon="🛒"
       ariaLabel="Add to cart"
       (onClick)="addToCart()"
     ></app-icon-button>
-    <app-icon-button
+    <app-icon-button *ngIf="isAdmin"
       icon="🗑️"
       ariaLabel="Delete product"
       (onClick)="deleteProduct()"
     ></app-icon-button>
+  <app-icon-button *ngIf="isAdmin"
+    icon="✏️"
+    ariaLabel="Edit product"
+    (onClick)="editProduct()"
+  ></app-icon-button>
+      <div class="action-buttons">
   </div>
 </div>

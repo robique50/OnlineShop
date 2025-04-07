@@ -1,20 +1,41 @@
-<div class="products-container">
-  <div *ngFor="let product of products" class="product-card">
-    <h3>{{ product.name }}</h3>
-    <p>{{ product.price | currency }}</p>
-    <div class="button-container">
-      <app-icon-button
-        icon="➡️"
-        ariaLabel="View details"
-        (onClick)="navigateToProductDetails(product)"
-      >
-      </app-icon-button>
-      <app-icon-button
-        icon="🛒"
-        ariaLabel="View cart"
-        (onClick)="navigateToCart()"
-      >
-      </app-icon-button>
+<div class="products-page">
+  <div class="products-header">
+    <app-icon-button 
+      *ngIf="isAdmin"
+      icon="➕"
+      ariaLabel="Add new product"
+      (onClick)="createProduct()"
+    >
+    </app-icon-button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    Loading products...
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="products-container">
+    <div *ngFor="let product of products" class="product-card">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.price | currency }}</p>
+      <div class="button-container">
+        <app-icon-button 
+          icon="➡️"
+          ariaLabel="View details"
+          (onClick)="navigateToProductDetails(product)"
+        >
+        </app-icon-button>
+        <app-icon-button 
+          *ngIf="isCustomer"
+          icon="🛒"
+          ariaLabel="Add to cart"
+          (onClick)="navigateToCart()"
+        >
+        </app-icon-button>
+      </div>
     </div>
   </div>
 </div>

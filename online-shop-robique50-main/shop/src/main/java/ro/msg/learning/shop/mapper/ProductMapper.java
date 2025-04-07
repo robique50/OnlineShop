@@ -10,24 +10,26 @@ public class ProductMapper {
 
     public ProductDTO toDTO(Product product) {
         return ProductDTO.builder()
-                .productId(product.getId())
-                .productName(product.getName())
-                .productDescription(product.getDescription())
-                .productPrice(product.getPrice())
-                .productWeight(product.getWeight())
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .weight(product.getWeight())
                 .categoryId(product.getCategory().getId())
                 .categoryName(product.getCategory().getName())
+                .imageUrl(product.getImageUrl())
                 .build();
     }
 
     public Product toEntity(ProductDTO dto, ProductCategory category) {
         return Product.builder()
-                .id(dto.getProductId())
-                .name(dto.getProductName())
-                .description(dto.getProductDescription())
-                .price(dto.getProductPrice())
-                .weight(dto.getProductWeight())
+                .id(dto.getId())
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .price(dto.getPrice())
+                .weight(dto.getWeight())
                 .category(category)
+                .imageUrl(dto.getImageUrl())
                 .build();
     }
 }

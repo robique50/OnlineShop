@@ -4,6 +4,8 @@ import { CartItem } from '../../../../../shared/types/products.types';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
 import { AppRoutes } from '../../../../../shared/enums/routes.enum';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DeliveryDetails } from '../../../../../shared/types/order.types';
+import { finalize } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -15,13 +17,15 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class ShoppingCartDetailsComponent implements OnInit {
   protected cartItems: CartItem[] = [];
   protected cartTotalPrice: number = 0;
+  protected showDeliveryForm = false;
+  protected isProcessingCheckout = false;
 
   constructor(
     private router: Router,
     private shoppingCartService: ShoppingCartService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loadCartItems();
   }
 
@@ -70,24 +74,43 @@ export class ShoppingCartDetailsComponent implements OnInit {
   }
 
   protected checkout(): void {
-    if (!this.cartItems.length) {
+    if (!this.cartItems.length || this.isProcessingCheckout) {
+      return;
+    }
+    this.showDeliveryForm = true;
+  }
+
+  protected onDeliverySubmit(deliveryDetails: DeliveryDetails): void {
+    if (this.isProcessingCheckout) {
       return;
     }
 
+    this.isProcessingCheckout = true;
+
     this.shoppingCartService
-      .checkout(this.cartItems)
-      .pipe(untilDestroyed(this))
+      .checkout(this.cartItems, deliveryDetails)
+      .pipe(
+        untilDestroyed(this),
+        finalize(() => {
+          this.isProcessingCheckout = false;
+          this.shoppingCartService.resetProcessingState();
+        })
+      )
       .subscribe({
         next: () => {
-          this.router.navigate([AppRoutes.Products]).then(() => {
-            localStorage.removeItem('cartItems');
-            this.cartItems = [];
-            this.updateCartTotal();
-          });
+          localStorage.removeItem('cartItems');
+          this.cartItems = [];
+          this.updateCartTotal();
+          this.showDeliveryForm = false;
+          this.router.navigate([AppRoutes.Products]);
         },
         error: (error) => {
           console.error('Error creating order:', error);
         },
       });
+  }
+
+  protected onDeliveryCancel(): void {
+    this.showDeliveryForm = false;
   }
 }

@@ -7,12 +7,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.security.JwtUtil;
 import ro.msg.learning.shop.dto.LoginRequest;
+import ro.msg.learning.shop.dto.UserProfileDTO;
+import ro.msg.learning.shop.security.CustomUserDetails;
 
 @Slf4j
 @RestController
@@ -45,5 +46,23 @@ public class AuthController {
             log.error("Error during authentication", e);
             return ResponseEntity.status(500).body("Authentication error occurred");
         }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserProfileDTO> getProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        String role = authentication.getAuthorities().stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse("CUSTOMER");
+
+        UserProfileDTO profile = new UserProfileDTO(
+                userDetails.getId(),
+                userDetails.getUsername(),
+                role
+        );
+
+        return ResponseEntity.ok(profile);
     }
 }

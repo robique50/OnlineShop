@@ -1,30 +1,100 @@
-$primary-color: #007bff;
-$secondary-color: #6c757d;
-$white: #fff;
-$green: #28a745;
-$black: #000;
-$blue: #007bff;
-$red: #d32f2f;
-$dark-blue: #004085;
+@use "sass:color";
+
+$white: #ffffff;
+$black: #000000;
+$shadow-dark: rgba(0, 0, 0, 0.2);
+
+$dark-bg-primary: #1a1a1a;
+$dark-bg-secondary: #2d2d2d;
+$dark-bg-tertiary: #404040;
+$dark-bg-hover: color.adjust($dark-bg-tertiary, $lightness: 5%);
+$border-color: $dark-bg-tertiary;
+
+$blue-primary: #3699ff;
+$blue-secondary: #2884e0;
+$blue-dark: #1b6ec2;
+$blue-light: #63b3ff;
+$blue-hover: #2884e0;
+
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;
 $gray-300: #dee2e6;
 $gray-400: #ced4da;
 $gray-500: #adb5bd;
-$gray-600: #666;
+$gray-600: #6c757d;
 $gray-700: #495057;
 $gray-800: #343a40;
-$shadow-light: rgba(0, 0, 0, 0.1);
+$gray-900: #212529;
 
-$border-color: $gray-300;
-$text-primary: $gray-800;
-$text-secondary: $gray-600;
-$bg-primary: $white;
-$bg-secondary: $gray-100;
+$card-bg: $dark-bg-secondary;
+$card-border: $dark-bg-tertiary;
+$card-hover-bg: color.adjust($dark-bg-secondary, $lightness: 5%);
 
-:export {
-  white: $white;
-  green: $green;
-  blue: $blue;
-  darkBlue: $dark-blue;
-}
+$cart-item-bg: $dark-bg-secondary;
+$cart-item-hover: color.adjust($dark-bg-secondary, $lightness: 3%);
+$cart-total-border: $blue-primary;
+$cart-quantity-bg: $dark-bg-tertiary;
+
+$text-primary: $gray-100;
+$text-secondary: $gray-400;
+$text-muted: $gray-600;
+$price-color: #2ecc71;
+
+$quantity-bg: $dark-bg-tertiary;
+
+$form-bg: $dark-bg-secondary;
+$error-bg: rgba(220, 53, 69, 0.1);
+$image-bg: $dark-bg-tertiary;
+
+$header-bg: $dark-bg-secondary;
+$header-border: $border-color;
+$header-shadow: 0 2px 8px $shadow-dark;
+$header-text: $text-primary;
+$header-accent: $blue-primary;
+
+$icon-button-bg: $dark-bg-tertiary;
+$icon-button-hover: color.adjust($dark-bg-tertiary, $lightness: 5%);
+$icon-button-active: color.adjust($dark-bg-tertiary, $lightness: -5%);
+$icon-button-color: $text-primary;
+
+$danger: #dc3545;
+$danger-dark: color.adjust($danger, $lightness: -10%);
+$warning: #ffc107;
+$success: #28a745;
+$info: #17a2b8;
+
+$shadow-light: rgba(255, 255, 255, 0.1);
+
+$background-primary: #1a1a1a;
+$background-secondary: #2a2a2a;
+$background-tertiary: #333333;
+
+$text-primary: #ffffff;
+$text-secondary: #b3b3b3;
+$text-error: #dc3545;
+
+$border-primary: #404040;
+$border-error: #dc3545;
+
+$button-primary: #0d6efd;
+$button-secondary: #6c757d;
+$button-danger: #dc3545;
+
+$dark-bg-primary: #1a1a1a;
+$dark-bg-secondary: #2a2a2a;
+$dark-bg-tertiary: #333333;
+$text-primary: #ffffff;
+$text-secondary: #b3b3b3;
+$danger: #dc3545;
+$blue-primary: #0d6efd;
+$border-color: #404040;
+$header-accent: #ffffff;
+$header-bg: #2a2a2a;
+$header-border: #404040;
+$form-bg: #2a2a2a;
+$error-bg: rgba(220, 53, 69, 0.1);
+
+$input-focus-shadow: rgba(54, 153, 255, 0.25);
+$input-error-shadow: rgba(220, 53, 69, 0.25);
+$transition-quick: 0.2s ease;
+$transition-normal: 0.3s ease;

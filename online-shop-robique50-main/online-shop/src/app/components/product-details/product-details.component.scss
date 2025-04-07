@@ -1,90 +1,84 @@
-@use "../../styles/colors" as *;
+@use "../../styles/colors" as c;
+@use "../../styles/mixins" as m;
 
 .product-details {
+  @include m.card;
   max-width: 800px;
   margin: 20px auto;
-  padding: 20px;
-  background-color: $bg-primary;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px $shadow-light;
+  padding: 30px;
+  background: c.$card-bg;
 
   h2 {
-    font-size: 2em;
-    color: $text-primary;
+    color: c.$text-primary;
+    font-size: 28px;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 24px;
   }
 
   .product-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 150px;
-    background-color: $white;
-    border: 1px solid $border-color;
-    border-radius: 4px;
-    padding: 10px;
-    margin: 0 auto 15px;
+    @include m.product-image-container;
 
     img {
       width: 100%;
-      height: auto;
+      height: 100%;
       object-fit: contain;
     }
   }
 
   p {
-    font-size: 1.1em;
-    color: $text-secondary;
+    color: c.$text-secondary;
+    font-size: 16px;
     line-height: 1.6;
-    margin: 10px 0;
+    margin: 8px 0;
+
+    strong {
+      color: c.$text-primary;
+      margin-right: 8px;
+    }
 
     .product-price {
-      color: $green;
+      color: c.$price-color;
+      font-size: 20px;
+      font-weight: bold;
     }
   }
 
   .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
-    justify-content: center;
-
-    label {
-      color: $text-secondary;
-      font-size: 1rem;
-    }
+    @include m.flex-center;
+    gap: 16px;
+    margin: 24px 0;
 
     .quantity-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      @include m.flex-center;
+      gap: 12px;
+      background: c.$quantity-bg;
+      padding: 8px;
+      border-radius: 4px;
 
       span {
+        color: c.$text-primary;
+        font-weight: 500;
         min-width: 30px;
         text-align: center;
-        color: $text-primary;
-        font-weight: 500;
-      }
-
-      app-icon-button {
-        width: 32px;
-        height: 32px;
-        background-color: $bg-secondary;
-
-        &:hover {
-          background-color: $gray-200;
-        }
       }
     }
   }
 
   .action-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
+    @include m.flex-center;
+    gap: 16px;
+    margin-top: 24px;
+
+    app-icon-button {
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
   }
+}
+
+.loading-container {
+  @include m.flex-center;
+  min-height: 400px;
+  color: c.$text-secondary;
 }

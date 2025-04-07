@@ -1,0 +1,63 @@
+@use '../../../../../styles/colors' as c;
+@use '../../../../../styles/mixins' as m;
+
+.delivery-form {
+  @include m.form-layout;
+
+  h3 {
+    @include m.form-title;
+  }
+
+  .form-group {
+    @include m.form-field;
+
+    label {
+      color: c.$text-primary;
+      font-weight: 500;
+      
+      &::after {
+        content: '*';
+        color: c.$danger;
+        margin-left: 4px;
+      }
+    }
+
+    input {
+      @include m.input-field;
+      
+      &.ng-invalid.ng-touched {
+        border-color: c.$danger;
+        background: c.$error-bg;
+      }
+    }
+
+    div[class*="errors"] {
+      color: c.$danger;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: all 0.2s ease;
+
+      &.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .form-actions {
+    @include m.form-actions;
+
+    button {
+      &[type="submit"] {
+        @include m.button-primary;
+      }
+
+      &[type="button"] {
+        @include m.button-danger;
+      }
+    }
+  }
+}

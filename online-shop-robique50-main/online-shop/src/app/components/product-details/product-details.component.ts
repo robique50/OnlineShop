@@ -4,6 +4,7 @@ import { Product } from '../../modules/shared/types/products.types';
 import { ProductService } from '../../services/product.service';
 import { AppRoutes } from '../../modules/shared/enums/routes.enum';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { AuthService } from '../../services/auth.service';
 
 @UntilDestroy()
 @Component({
@@ -19,10 +20,11 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const productId = this.activatedRoute.snapshot.paramMap.get('id');
     if (productId) {
       this.loadProduct(productId);
@@ -84,6 +86,20 @@ export class ProductDetailsComponent implements OnInit {
       this.router.navigate([AppRoutes.Cart]).then(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
       });
+    }
+  }
+
+  public get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  public get isCustomer(): boolean {
+    return this.authService.isCustomer();
+  }
+
+  protected editProduct(): void {
+    if (this.product?.id) {
+      this.router.navigate(['/products', this.product.id, 'edit']);
     }
   }
 }

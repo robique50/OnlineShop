@@ -11,17 +11,19 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ProductDTO {
-    private UUID productId;
+    private UUID id;
 
-    private String productName;
+    private String name;
 
-    private String productDescription;
+    private String description;
 
-    private BigDecimal productPrice;
+    private BigDecimal price;
 
-    private Double productWeight;
+    private Double weight;
 
     private UUID categoryId;
 
     private String categoryName;
+
+    private String imageUrl;
 }

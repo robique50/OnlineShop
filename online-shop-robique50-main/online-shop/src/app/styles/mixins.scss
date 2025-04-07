@@ -1,4 +1,16 @@
-@use 'colors' as c;
+@use "sass:color";
+@use "colors" as c;
+
+@mixin card {
+  background: c.$card-bg;
+  border-radius: 8px;
+  border: 1px solid c.$card-border;
+  box-shadow: 0 4px 6px c.$shadow-dark;
+
+  &:hover {
+    box-shadow: 0 6px 8px c.$shadow-dark;
+  }
+}
 
 @mixin flex-center {
   display: flex;
@@ -12,28 +24,285 @@
   justify-content: space-between;
 }
 
-@mixin icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: c.$white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    opacity: 0.9;
-  }
+@mixin input-field {
+  width: 100%;
+  padding: 12px;
+  background: c.$dark-bg-tertiary;
+  border: 1px solid c.$card-border;
+  border-radius: 4px;
+  color: c.$text-primary;
+  transition: all 0.3s ease;
 
   &:focus {
+    border-color: c.$blue-primary;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(c.$green, 0.5);
+    box-shadow: 0 0 0 2px rgba(c.$blue-primary, 0.2);
+  }
+
+  &::placeholder {
+    color: c.$text-muted;
   }
 }
 
-@mixin card-shadow {
-  box-shadow: 0 2px 4px $shadow-light;
+@mixin button-primary {
+  padding: 12px 24px;
+  background: c.$blue-primary;
+  color: c.$text-primary;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background: c.$blue-hover;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: c.$gray-600;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-secondary {
+  @include button-primary;
+  background: c.$dark-bg-tertiary;
+  border: 1px solid c.$card-border;
+
+  &:hover:not(:disabled) {
+    background: c.$dark-bg-hover;
+  }
+}
+
+@mixin icon-button {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: c.$dark-bg-tertiary;
+  border: 1px solid c.$card-border;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: c.$dark-bg-hover;
+    transform: translateY(-1px);
+  }
+}
+
+@mixin form-container {
+  background: c.$dark-bg-secondary;
+  border-radius: 8px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@mixin form-title {
+  color: c.$text-primary;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+
+  .required {
+    color: inherit;
+  }
+}
+
+@mixin form-field {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    color: c.$text-secondary;
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    .required {
+      color: inherit;
+      margin-left: 4px;
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px;
+    background: c.$background-tertiary;
+    border: 1px solid c.$border-primary;
+    border-radius: 4px;
+    color: c.$text-primary;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: c.$button-primary;
+    }
+
+    &.error {
+      border-color: c.$border-error;
+    }
+  }
+
+  .error-message {
+    color: c.$text-error;
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@mixin button-base {
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: c.$button-primary;
+  color: c.$text-primary;
+
+  &:hover:not(:disabled) {
+    background: c.$button-primary;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: c.$button-secondary;
+  color: c.$text-primary;
+
+  &:hover:not(:disabled) {
+    background: c.$button-secondary;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: c.$button-danger;
+  color: c.$text-primary;
+
+  &:hover:not(:disabled) {
+    background: c.$button-danger;
+  }
+}
+
+@mixin grid-container {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+@mixin product-image-container {
+  @include flex-center;
+  background: c.$image-bg;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid c.$border-color;
+}
+
+@mixin product-info {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
+
+@mixin form-layout {
+  @include card;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: c.$form-bg;
+}
+
+@mixin form-title {
+  color: c.$text-primary;
+  font-size: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+@mixin form-actions {
+  @include flex-between;
+  margin-top: 32px;
+  gap: 16px;
+}
+
+@mixin icon-button {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: c.$icon-button-bg;
+  border: 1px solid c.$border-color;
+  color: c.$icon-button-color;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: c.$icon-button-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px c.$shadow-dark;
+  }
+
+  &:active {
+    background: c.$icon-button-active;
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: c.$gray-600;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+@mixin transition-base {
+  transition: all c.$transition-normal;
+}
+
+@mixin form-validation {
+  &.ng-invalid.ng-touched {
+    border-color: c.$danger;
+    box-shadow: 0 0 0 2px c.$input-error-shadow;
+  }
+}
+
+@mixin responsive-padding {
+  padding: 2rem;
+  
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
 }

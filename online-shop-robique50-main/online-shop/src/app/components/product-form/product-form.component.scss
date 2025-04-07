@@ -1,0 +1,100 @@
+@use '../../styles/colors' as c;
+@use '../../styles/mixins' as m;
+
+.page-container {
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  background: c.$dark-bg-primary;
+}
+
+.product-form {
+  @include m.form-layout;
+
+  h3 {
+    @include m.form-title;
+    color: c.$header-accent;
+  }
+
+  .form-group {
+    @include m.form-field;
+
+    label {
+      color: c.$text-primary;
+      font-weight: 500;
+      
+      &::after {
+        content: '*';
+        color: c.$danger;
+        margin-left: 4px;
+      }
+    }
+
+    input, textarea, select {
+      @include m.input-field;
+      width: 100%;
+      
+      &.ng-invalid.ng-touched {
+        border-color: c.$danger;
+        background: c.$error-bg;
+      }
+    }
+
+    select {
+      background: c.$dark-bg-tertiary;
+      color: c.$text-primary;
+      cursor: pointer;
+      
+      option {
+        background: c.$dark-bg-tertiary;
+        color: c.$text-primary;
+        padding: 8px;
+      }
+    }
+
+    div[class*="errors"] {
+      color: c.$danger;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+
+    .half-width {
+      flex: 1;
+    }
+  }
+
+  .image-preview {
+    @include m.product-image-container;
+    margin: 1.5rem 0;
+    
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .form-actions {
+    @include m.form-actions;
+    margin-top: 2rem;
+
+    button {
+      &[type="submit"] {
+        @include m.button-primary;
+        order: 1;
+      }
+
+      &[type="button"] {
+        @include m.button-danger;
+        order: 2;
+      }
+    }
+  }
+}

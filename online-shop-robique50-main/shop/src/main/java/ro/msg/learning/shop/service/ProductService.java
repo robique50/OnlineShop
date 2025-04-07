@@ -33,8 +33,8 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public ProductCategory findCategoryById(UUID id) {
-        return productCategoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product category not found"));
+    public ProductCategory findCategoryByName(String name) {
+        return productCategoryRepository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("Product category not found with name: " + name));
     }
 }

@@ -1,5 +1,7 @@
-@use '../../../../styles/mixins.scss' as *;
+@use '../../../../styles/colors' as c;
+@use '../../../../styles/mixins' as m;
 
 .icon-button {
-  @include icon-button;
+  @include m.icon-button;
+  margin: 4px;
 }

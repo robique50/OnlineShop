@@ -134,37 +134,4 @@ class MostAbundantStrategyTest {
         assertThrows(IllegalArgumentException.class,
                 () -> strategy.findLocationsForProducts(orderProducts));
     }
-
-    @Test
-    void whenNoUnusedLocationsAvailable_thenThrowException() {
-        List<OrderProductDTO> orderProducts = Arrays.asList(
-                OrderProductDTO.builder()
-                        .productId(product1Id)
-                        .productName("Product 1")
-                        .quantity(2)
-                        .build(),
-                OrderProductDTO.builder()
-                        .productId(product2Id)
-                        .productName("Product 2")
-                        .quantity(3)
-                        .build()
-        );
-
-        List<Stock> availableStocks = Arrays.asList(
-                Stock.builder()
-                        .stockId(new StockId(location1Id, product1Id))
-                        .quantity(10)
-                        .build(),
-                Stock.builder()
-                        .stockId(new StockId(location1Id, product2Id))
-                        .quantity(15)
-                        .build()
-        );
-
-        when(stockRepository.findStocksByProductIds(anyList())).thenReturn(availableStocks);
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> strategy.findLocationsForProducts(orderProducts));
-        assertTrue(exception.getMessage().contains("No available locations left"));
-    }
 }

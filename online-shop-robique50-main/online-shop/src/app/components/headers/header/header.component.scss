@@ -1,0 +1,57 @@
+@use '../../../styles/colors' as c;
+@use '../../../styles/mixins' as m;
+
+.header {
+  background: c.$header-bg;
+  border-bottom: 1px solid c.$header-border;
+  box-shadow: c.$header-shadow;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.header-content {
+  @include m.flex-between;
+  max-width: 100%;
+  margin: 0;
+  padding: 1rem 2rem;
+
+  h1 {
+    color: c.$header-accent;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      color: c.$blue-light;
+    }
+  }
+}
+
+.user-section {
+  @include m.flex-center;
+  gap: 1.5rem;
+
+  .username {
+    color: c.$text-secondary;
+    font-size: 0.9rem;
+  }
+
+  .logout-button {
+    @include m.button-primary;
+    background-color: c.$danger;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      background-color: c.$danger;
+    }
+  }
+}

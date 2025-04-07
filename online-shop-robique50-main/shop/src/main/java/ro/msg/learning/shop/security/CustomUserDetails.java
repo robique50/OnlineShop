@@ -9,6 +9,7 @@ import ro.msg.learning.shop.model.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
@@ -29,4 +30,29 @@ public class CustomUserDetails implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
+    public UUID getId() {
+        return user.getId();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
