@@ -1,9 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
-import { LoginRequest, User } from '../modules/shared/types/user.types';
+import {
+  LoginRequest,
+  RegisterRequest,
+  User,
+} from '../modules/shared/types/user.types';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +24,11 @@ export class AuthService {
   public currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.checkAuthStatus();
   }
 
@@ -53,6 +69,36 @@ export class AuthService {
             localStorage.getItem('redirectUrl') || '/products';
           localStorage.removeItem('redirectUrl');
           this.router.navigate([redirectUrl]);
+        }),
+        catchError((error) => {
+          const errorMessage =
+            error?.error || 'Login failed. Please check your credentials.';
+          this.snackBar.open(errorMessage, 'Close', { duration: 3000, panelClass: ['error-snackbar'] });
+          return throwError(() => error);
+        })
+      );
+  }
+
+  public register(registerRequest: RegisterRequest): Observable<any> {
+    return this.http
+      .post(`${environment.apiUrl}/auth/register`, registerRequest)
+      .pipe(
+        tap(() => {
+          this.snackBar.open(
+            'Registration successful! Please log in.',
+            'Close',
+            { duration: 3000, panelClass: ['success-snackbar'] }
+          );
+          this.router.navigate(['/login']);
+        }),
+        catchError((error) => {
+          const errorMessage =
+            error?.error || 'Registration failed. Please try again.';
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+          });
+          return throwError(() => error);
         })
       );
   }

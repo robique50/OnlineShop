@@ -11,4 +11,9 @@ import java.util.UUID;
 public interface UserRepository  extends JpaRepository<User, UUID> {
     @Query("SELECT u FROM User u WHERE u.username = :username")
     Optional<User> findByUsername(@Param("username") String username);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmailAddress(String emailAddress);
+
 }

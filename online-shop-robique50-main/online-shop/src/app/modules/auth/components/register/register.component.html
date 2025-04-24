@@ -1,0 +1,95 @@
+<div class="register-container"> 
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form"> <!-- Use a distinct form class -->
+    <h2>Create Account</h2>
+
+    <div class="form-group">
+      <label for="firstName">First Name <span class="required">*</span></label>
+      <input id="firstName" type="text" formControlName="firstName" placeholder="Enter your first name" [class.error]="hasError('firstName', 'required') || hasError('firstName', 'maxlength')">
+      <div class="error-message" *ngIf="hasError('firstName', 'required')">
+        First name is required.
+      </div>
+      <div class="error-message" *ngIf="hasError('firstName', 'maxlength')">
+        First name cannot exceed 50 characters.
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Last Name <span class="required">*</span></label>
+      <input id="lastName" type="text" formControlName="lastName" placeholder="Enter your last name" [class.error]="hasError('lastName', 'required') || hasError('lastName', 'maxlength')">
+      <div class="error-message" *ngIf="hasError('lastName', 'required')">
+        Last name is required.
+      </div>
+      <div class="error-message" *ngIf="hasError('lastName', 'maxlength')">
+        Last name cannot exceed 50 characters.
+      </div>
+    </div>
+
+    <!-- Username -->
+    <div class="form-group">
+      <label for="username">Username <span class="required">*</span></label>
+      <input id="username" type="text" formControlName="username" placeholder="Choose a username" [class.error]="hasError('username', 'required') || hasError('username', 'minlength') || hasError('username', 'maxlength')">
+      <div class="error-message" *ngIf="hasError('username', 'required')">
+        Username is required.
+      </div>
+      <div class="error-message" *ngIf="hasError('username', 'minlength')">
+        Username must be at least 3 characters.
+      </div>
+       <div class="error-message" *ngIf="hasError('username', 'maxlength')">
+        Username cannot exceed 50 characters.
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="emailAddress">Email <span class="required">*</span></label>
+      <input id="emailAddress" type="email" formControlName="emailAddress" placeholder="Enter your email" [class.error]="hasError('emailAddress', 'required') || hasError('emailAddress', 'email') || hasError('emailAddress', 'maxlength')">
+      <div class="error-message" *ngIf="hasError('emailAddress', 'required')">
+        Email is required.
+      </div>
+      <div class="error-message" *ngIf="hasError('emailAddress', 'email')">
+        Please enter a valid email address.
+      </div>
+       <div class="error-message" *ngIf="hasError('emailAddress', 'maxlength')">
+        Email cannot exceed 100 characters.
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password <span class="required">*</span></label>
+      <input id="password" type="password" formControlName="password" placeholder="Create a password" [class.error]="hasError('password', 'required') || hasError('password', 'minlength') || hasError('password', 'maxlength')">
+      <div class="error-message" *ngIf="hasError('password', 'required')">
+        Password is required.
+      </div>
+      <div class="error-message" *ngIf="hasError('password', 'minlength')">
+        Password must be at least 6 characters.
+      </div>
+       <div class="error-message" *ngIf="hasError('password', 'maxlength')">
+        Password cannot exceed 100 characters.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role <span class="required">*</span></label>
+      <select id="role" formControlName="role" [class.error]="hasError('role', 'required')">
+        <option value="" disabled>Select a role</option>
+        <option *ngFor="let roleOption of availableRoles" [value]="roleOption">
+          {{ roleOption }}
+        </option>
+      </select>
+      <div class="error-message" *ngIf="hasError('role', 'required')">
+        Role is required.
+      </div>
+    </div>
+
+    <button type="submit" class="submit-button" [disabled]="registerForm.invalid || isLoading">
+      {{ isLoading ? 'Registering...' : 'Register' }}
+    </button>
+
+    <div class="navigation-link"> 
+      <span>Already have an account? </span>
+      <a (click)="navigateToLogin()" role="button">Login here</a>
+    </div>
+  </form>
+</div>

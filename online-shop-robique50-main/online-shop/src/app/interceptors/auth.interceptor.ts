@@ -1,12 +1,32 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpInterceptorFn,
+  HttpRequest,
+  HttpHandlerFn,
+  HttpEvent,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
+export const authInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
   const router = inject(Router);
   const token = localStorage.getItem('token');
+
+  const publicPaths = [
+    `${environment.apiUrl}/auth/login`,
+    `${environment.apiUrl}/auth/register`,
+  ];
+
+  const isPublicPath = publicPaths.some((path) => req.url.includes(path));
+
+  if (isPublicPath) {
+    return next(req);
+  }
 
   if (token) {
     const modifiedReq = req.clone({
@@ -16,6 +36,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(modifiedReq).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
+          console.error('Interceptor caught 401 error. Redirecting to login.');
           localStorage.removeItem('token');
           localStorage.removeItem('cartItems');
           router.navigate(['/login']);
@@ -25,11 +46,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     );
   }
 
-  if (!token && !req.url.includes('/auth/login')) {
-    localStorage.setItem('redirectUrl', router.url);
-    router.navigate(['/login']);
-    return throwError(() => new Error('No authentication token'));
-  }
-
+  console.warn('No token found for non-public route:', req.url);
   return next(req);
 };

@@ -1,8 +1,7 @@
 package ro.msg.learning.shop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
 import lombok.*;
@@ -16,6 +15,7 @@ import lombok.*;
 @Table(name = "user")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String firstName;

@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RegisterComponent } from './modules/auth/components/register/register.component';
 
 @NgModule({
   declarations: [

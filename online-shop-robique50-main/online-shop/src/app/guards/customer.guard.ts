@@ -19,14 +19,21 @@ export class CustomerGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.authService.isAuthenticated()) {
-      localStorage.setItem('redirectUrl', this.router.url);
-      this.router.navigate(['/login']);
-      return false;
-    }
-
     if (this.authService.isCustomer()) {
       return true;
+    } else {
+      this.snackBar.open(
+        'Access denied. Shopping cart is only available for customers.',
+        'Close',
+        {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar'],
+        }
+      );
+      this.router.navigate(['/products']);
+      return false;
     }
 
     this.snackBar.open(

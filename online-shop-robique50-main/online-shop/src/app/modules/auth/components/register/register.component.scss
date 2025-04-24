@@ -1,0 +1,104 @@
+@use "../../../../styles/colors" as c;
+@use "../../../../styles/mixins" as m;
+
+.register-container {
+  min-height: 70vh; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: c.$dark-bg-primary; 
+}
+
+.register-form {
+  @include m.form-container; 
+
+  h2 {
+    color: c.$text-primary; 
+    font-size: 24px; 
+    margin-bottom: 24px; 
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 20px; 
+
+    label {
+      display: block;
+      color: c.$text-secondary; 
+      margin-bottom: 8px; 
+      font-size: 14px; 
+
+      .required {
+        color: c.$danger; 
+        margin-left: 4px;
+      }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select { 
+      @include m.input-field; 
+
+      &.error {
+        border-color: c.$danger;
+      }
+    }
+
+    select {
+       background-color: c.$dark-bg-secondary; 
+       color: c.$text-primary; 
+       appearance: none;
+       -webkit-appearance: none;
+       -moz-appearance: none;
+    }
+
+    .error-message {
+      color: c.$danger; 
+      font-size: 12px; 
+      margin-top: 4px; 
+    }
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 12px; 
+    background: c.$blue-primary; 
+    color: c.$text-primary; 
+    border: none;
+    border-radius: 4px; 
+    font-size: 14px; 
+    font-weight: 500; 
+    cursor: pointer;
+    transition: all 0.2s ease; 
+
+    &:disabled {
+      opacity: 0.7; 
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: c.$blue-light;
+      transform: translateY(-1px); 
+    }
+  }
+
+  .navigation-link {
+    margin-top: 20px; 
+    text-align: center;
+    font-size: 0.9em;
+    color: c.$text-secondary;
+
+    a {
+      color: c.$blue-primary;
+      text-decoration: none;
+      cursor: pointer;
+      margin-left: 5px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
