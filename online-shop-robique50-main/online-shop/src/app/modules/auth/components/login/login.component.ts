@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.returnUrl =
       this.activatedRoute.snapshot.queryParams['returnUrl'] || '/products';
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate([this.returnUrl]);
+    }
   }
 
   login(): void {
@@ -53,7 +56,6 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (user) => {
           this.authService.currentUserSubject.next(user);
-          this.router.navigate(['/products']);
         },
         error: (error) => {
           console.error('Login error:', error);
@@ -65,5 +67,9 @@ export class LoginComponent implements OnInit {
   hasError(controlName: string, errorType: string): boolean {
     const control = this.loginForm.get(controlName);
     return (control?.touched && control?.hasError(errorType)) || false;
+  }
+
+  navigateToRegister(): void {
+    this.router.navigate(['/register']);
   }
 }

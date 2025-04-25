@@ -38,11 +38,12 @@ export class AuthService {
       this.currentUserSubject.next(null);
       return;
     }
-
     this.loadUserProfile().subscribe({
-      next: (user) => this.currentUserSubject.next(user),
-      error: () => {
-        this.clearAuth();
+      next: (user) => {
+        this.currentUserSubject.next(user);
+      },
+      error: (err) => {
+        this.clearAuth(); 
       },
     });
   }
@@ -62,7 +63,9 @@ export class AuthService {
         tap((token) => {
           localStorage.setItem('token', token);
         }),
-        switchMap(() => this.loadUserProfile()),
+        switchMap(() => {
+          return this.loadUserProfile();
+        }),
         tap((user) => {
           this.currentUserSubject.next(user);
           const redirectUrl =
@@ -73,7 +76,10 @@ export class AuthService {
         catchError((error) => {
           const errorMessage =
             error?.error || 'Login failed. Please check your credentials.';
-          this.snackBar.open(errorMessage, 'Close', { duration: 3000, panelClass: ['error-snackbar'] });
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+          });
           return throwError(() => error);
         })
       );
@@ -116,14 +122,16 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    return !!token && !!this.currentUserSubject.value;
+    return !!token;
   }
 
   public isAdmin(): boolean {
-    return this.currentUserSubject.value?.role === 'ADMIN';
+    const user = this.currentUserSubject.value;
+    return user?.role === 'ADMIN';
   }
 
   public isCustomer(): boolean {
-    return this.currentUserSubject.value?.role === 'CUSTOMER';
+    const user = this.currentUserSubject.value;
+    return user?.role === 'CUSTOMER';
   }
 }

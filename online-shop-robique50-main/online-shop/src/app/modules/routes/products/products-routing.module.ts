@@ -18,14 +18,14 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: ':id',
-    component: ProductDetailsComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: ':id/edit',
     component: ProductFormComponent,
     canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: ':id',
+    component: ProductDetailsComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

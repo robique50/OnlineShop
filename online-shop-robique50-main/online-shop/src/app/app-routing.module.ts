@@ -8,7 +8,7 @@ import { RegisterComponent } from './modules/auth/components/register/register.c
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   {
     path: 'products',
     loadChildren: () =>
@@ -25,7 +25,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, CustomerGuard],
   },
-  { path: '**', redirectTo: '/login' },
+  { path: '**', redirectTo: '/products' },
 ];
 
 @NgModule({

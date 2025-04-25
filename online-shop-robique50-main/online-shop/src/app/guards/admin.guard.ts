@@ -19,12 +19,6 @@ export class AdminGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.authService.isAuthenticated()) {
-      localStorage.setItem('redirectUrl', this.router.url);
-      this.router.navigate(['/login']);
-      return false;
-    }
-
     if (this.authService.isAdmin()) {
       return true;
     }
@@ -39,7 +33,6 @@ export class AdminGuard {
         panelClass: ['error-snackbar'],
       }
     );
-
     this.router.navigate(['/products']);
     return false;
   }

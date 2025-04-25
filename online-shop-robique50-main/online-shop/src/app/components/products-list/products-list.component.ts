@@ -25,12 +25,10 @@ export class ProductsListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    console.log('Component initialized');
     this.loadProducts();
   }
 
   private loadProducts(): void {
-    console.log('Starting to load products');
     this.loading = true;
     this.error = null;
 
@@ -39,11 +37,9 @@ export class ProductsListComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (products) => {
-          console.log('Products loaded:', products);
           this.products = products;
           this.loading = false;
           setTimeout(() => {
-            console.log('Products after timeout:', this.products);
           }, 0);
         },
         error: (error) => {
@@ -52,14 +48,12 @@ export class ProductsListComponent implements OnInit {
           this.loading = false;
         },
         complete: () => {
-          console.log('Products loading completed');
           this.loading = false;
         },
       });
   }
 
   protected navigateToProductDetails(product: Product): void {
-    console.log('Navigating to product:', product);
     if (product && product.id) {
       this.router.navigate([AppRoutes.Products, product.id]);
     } else {

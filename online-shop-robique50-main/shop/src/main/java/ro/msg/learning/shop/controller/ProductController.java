@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,8 +38,12 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable UUID id) {
-        Product product = productService.findById(id);
-        return ResponseEntity.ok(ProductMapper.toDTO(product));
+        try {
+            Product product = productService.findById(id);
+            return ResponseEntity.ok(ProductMapper.toDTO(product));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
