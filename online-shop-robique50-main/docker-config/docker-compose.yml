@@ -45,7 +45,7 @@ services:
     depends_on:
       - shop-backend
     ports:
-      - "80:80"
+      - "4200:80"
     networks:
       - shop-network
     restart: unless-stopped

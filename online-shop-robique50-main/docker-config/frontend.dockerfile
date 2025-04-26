@@ -25,7 +25,7 @@ COPY --from=build /app/dist/online-shop/browser /usr/share/nginx/html
 # Copiem configurația nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expunem portul 80
-EXPOSE 80
+# Expunem portul 4200
+EXPOSE 4200
 
 # Nginx pornește automat când containerul este rulat
